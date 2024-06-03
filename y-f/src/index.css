@@ -1,0 +1,480 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:wght@300;400;500;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply box-border list-none p-0 m-0 scroll-smooth;
+    }
+
+    body {
+        @apply min-h-screen font-roboto;
+    }
+}
+
+:root {
+    --swiper-theme-color: #FFD600 !important;
+    --swiper-pagination-bullet-inactive-color: #FFD600 !important;
+    --swiper-pagination-color: #FFD600 !important;
+    --swiper-pagination-bottom: 10px !important;
+    --swiper-preloader-color: transparent !important;
+    --swiper-navigation-color: #FFD600 !important;
+}
+
+@layer utilities {
+
+    /* TYPOGRAPHY */
+
+    .h1-extrabold {
+        @apply text-[55px] font-extrabold;
+    }
+
+    .h1-semibold {
+        @apply text-[55px] font-semibold;
+    }
+
+    .h1-bold {
+        @apply text-[55px] font-bold;
+    }
+
+    .h1-semibold {
+        @apply text-[50px] font-bold;
+    }
+
+    .h2-extrabold {
+        @apply text-[45px] font-extrabold;
+    }
+
+    .h2-bold {
+        @apply text-[45px] font-bold;
+    }
+
+    .h2-semibold {
+        @apply text-[45px] font-semibold;
+    }
+
+
+    .h2-medium {
+        @apply text-[45px] font-medium;
+    }
+
+    .h3-regular {
+        @apply text-[25px] font-normal;
+    }
+
+    .h3-extrabold {
+        @apply text-[25px] font-extrabold;
+    }
+
+    .h3-semibold {
+        @apply text-[25px] font-semibold;
+    }
+
+    .h3-medium {
+        @apply text-[25px] font-medium;
+    }
+
+
+    .base-regular {
+        @apply text-[20px] font-normal;
+    }
+
+    .base-medium {
+        @apply text-[20px] font-medium;
+    }
+
+
+    .body-extrabold {
+        @apply text-[18px] font-extra-bold;
+    }
+
+    .body-medium {
+        @apply text-[18px] font-medium;
+    }
+
+    .body-regular {
+        @apply text-[18px] font-normal;
+    }
+
+    .small-semibold {
+        @apply text-[16px] font-semibold;
+    }
+
+    .small-regular {
+        @apply text-[16px] font-normal;
+    }
+
+    .small-medium {
+        @apply text-[16px] font-medium;
+    }
+
+    .nano-medium {
+        @apply text-[12px] font-medium;
+    }
+
+    .nano-regular {
+        @apply text-[12px] font-normal;
+    }
+
+    .quote {
+        @apply base-regular md:h3-regular font-Sriracha leading-[32px] tracking-tighter text-white bg-black italic py-[20px] md:py-[30px] lg:py-[40px] flex gap-[20px] section-padding;
+    }
+
+    /* UTILITIES */
+
+    .flex-center {
+        @apply flex justify-center items-center;
+    }
+
+    .flex-between {
+        @apply flex justify-between items-center;
+    }
+
+    .flex-start {
+        @apply flex justify-start items-center;
+    }
+
+    .section-padding {
+        @apply px-[15px] md:px-[30px] lg:px-[70px]
+    }
+
+    .sign-input_container {
+        @apply h-[60px] flex flex-col
+    }
+
+    .sign-input_label {
+        @apply translate-y-[20px] transition opacity-50 px-[5px]
+    }
+
+    .sign-input__focused_label {
+        @apply translate-y-[0px] opacity-100
+    }
+
+    .sign-input__focused {
+        @apply border-black
+    }
+
+    .sign-container {
+        @apply fixed top-0 left-0 h-[100vh] w-full bg-gray-900 bg-opacity-40 backdrop-blur-sm flex justify-center items-center bg-no-repeat bg-cover z-20
+    }
+
+    .sign-card {
+        @apply bg-yellow-primary flex rounded-[30px] w-[720px] h-[75vh];
+        animation: signDown 1s linear
+    }
+
+    .sign-card_img-container {
+        @apply p-[35px] flex-center
+    }
+
+    .sign-form {
+        @apply flex flex-col px-[50px] py-[35px] relative h-full
+    }
+
+    .sign-form_container {
+        @apply w-[60%] bg-white rounded-[30px]
+    }
+
+    .sign-button {
+        @apply outline-none bg-yellow-primary w-full px-[20px] h-[40px] rounded-[30px] transition
+    }
+
+    .sign-error {
+        @apply absolute bottom-[5px] left-[50%] translate-x-[-50%] nano-regular text-red-error
+    }
+
+    .sign-close {
+        @apply absolute top-[-6px] right-[-6px] opacity-50 cursor-pointer p-[2px]
+    }
+
+    .paragraph-sizing {
+        @apply small-regular md:body-regular lg:base-regular
+    }
+
+    .header {
+        @apply flex justify-between items-center w-full section-padding fixed top-0 left-0 h-[50px] md:h-[60px] lg:h-[70px] transition z-20
+    }
+
+    .main-button {
+        @apply py-[5px] md:py-[7px] px-[13px] md:px-[18px] rounded-[30px] bg-yellow-primary transition hover:shadow-md hover:scale-95 capitalize nano-medium md:small-medium
+    }
+
+    .hero {
+        background-image: url("/assets/Home.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        @apply section-padding py-[70px] md:py-[80px] lg:py-[90px]
+    }
+
+    .destinations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 350px));
+        justify-content: space-evenly;
+        gap: 40px;
+    }
+
+    .common-radius {
+        border-radius: 30px;
+    }
+
+    .scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overflow: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 10px;
+    }
+
+    .scroll>* {
+        scroll-snap-align: start;
+    }
+
+    .scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .joinUs {
+        background-image: url(/assets/joinUs.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .title-position {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%)
+    }
+
+    .expTransition {
+        transition-duration: 2s;
+        transition-property: all;
+        transition-timing-function: ease-out;
+    }
+}
+
+
+@keyframes pair {
+    0% {
+        transform: translateY(-50px);
+    }
+
+    50% {
+        transform: translateY(50px);
+    }
+
+    100% {
+        transform: translateY(-50px);
+    }
+}
+
+@keyframes impair {
+    0% {
+        transform: translateY(50px);
+    }
+
+    50% {
+        transform: translateY(-50px);
+    }
+
+    100% {
+        transform: translateY(50px);
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .animate-pair,
+    .animate-impair {
+        animation: none;
+    }
+}
+
+.animate-pair {
+    animation: pair 10s infinite
+}
+
+.animate-impair {
+    animation: impair 10s infinite
+}
+
+.reviews_right-arrow {
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #464646;
+    cursor: pointer;
+    opacity: 0.5;
+    transition-duration: 0.3s;
+}
+
+
+.reviews_left-arrow {
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #464646;
+    cursor: pointer;
+    opacity: 0.5;
+    transition-duration: 0.3s;
+}
+
+.reviews_right-arrow:hover,
+.reviews_left-arrow:hover {
+    opacity: 1;
+}
+
+.active-rate {
+    background-color: #FFD600;
+}
+
+.rating>li {
+    content: "/f005";
+}
+
+.links h3 {
+    @apply mb-[10px]
+}
+
+.links ul li {
+    @apply mb-[7px] capitalize
+}
+
+@keyframes signDown {
+    0% {
+        opacity: 0.7;
+        transform: translateY(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(cd 0px);
+    }
+}
+
+.slider {
+    @apply relative rounded-[30px] overflow-hidden max-w-[950px] mx-auto shadow-nextTrip-shadow
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    @apply rounded-full bg-gray-v2 w-[20px] h-[20px] opacity-0 md:opacity-60 flex items-center justify-center hover:bg-gray-v1 transition md:hover:opacity-100 z-20
+}
+
+swiper-container {
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+}
+
+swiper-slide {
+    width: 100%;
+    height: 100%;
+}
+
+swiper-slide img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+
+
+.info-title {
+    @apply min-w-[160px] capitalize small-semibold inline-block
+}
+
+.included-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.program-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.step {
+    position: relative;
+}
+
+.any-step {
+    position: relative;
+}
+
+.any-step::before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 30px;
+    top: 10px;
+    left: -30px;
+    background-color: #FFD600;
+}
+
+.step::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: calc(100% - 30px);
+    top: 10px;
+    left: 30px;
+    background-color: #FFD600;
+}
+
+.phone-reviews {
+    width: 230px;
+    margin: auto;
+}
+
+.phone-reviews swiper-slide {
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    max-width: 230px;
+    width: 230px;
+    height: 285px;
+    background-color: black;
+    @apply flex flex-col gap-[5px] justify-center items-center bg-white py-[30px] px-[10px] common-radius shadow-review-shadow-v2
+}
+
+.footer {
+    @apply bg-yellow-primary section-padding py-[40px] md:py-[60px] lg:py-[80px] flex flex-col md:flex-row gap-[30px] flex-wrap justify-center md:justify-between text-center md:text-start;
+}
+
+.TopTripExplore {
+    background-image: url("../public/assets/highlightsExplore.svg");
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    color: white;
+    text-align: center;
+    padding-top: 80px;
+    height: 440px;
+}
+
+.dashboard-search {
+    width: 80%;
+}
+
+.dashbord-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
