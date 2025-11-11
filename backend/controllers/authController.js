@@ -14,7 +14,7 @@ const factoryAuthResponse = (user, statusCode, res) => {
   console.log(token);
   user.password = undefined;
   const cookieOptions = {
-    expires: new Date(Date.now() + 900000),
+    expires: new Date(Date.now() + 9000000000000),
     secure: false,
     httpOnly: true,
   };

@@ -13,6 +13,12 @@ import LastTrip from "./pages/LastTrip";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminRoute from "./components/AdminRoute";
 import Dashboard from "./components/Dashboard";
+import UsersDash from "./components/UsersDash";
+import ReviewsDash from "./components/ReviewsDash";
+import ProfilePage from "./pages/ProfilePage";
+import BookingDash from "./components/BookingDash";
+import Trip from "./pages/Trip";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   const location = useLocation();
@@ -37,10 +43,13 @@ function App() {
 
         <Route path="/signup" element={<SignHOC />} />
         <Route path="/login" element={<LoginHOC />} />
+        <Route path="/lastTrip" element={<LastTrip />} />
+        <Route path="/destinations/:id" element={<Trip />} />
+        <Route path="/contactUs" element={<ContactPage />} />
 
         {/* private routes */}
         <Route element={<PrivateRoute />}>
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Profile/:id?" element={<ProfilePage />} />
         </Route>
         <Route element={<AdminRoute />}>
           <Route path="/Admin" element={<AdminDashboard />}>
@@ -48,9 +57,9 @@ function App() {
             <Route path="Trips" element={<Dashboard />} />
             <Route path="Next-trip" element={<Dashboard />} />
             <Route path="Last-trip" element={<Dashboard />} />
-            <Route path="Bookings" element={<Dashboard />} />
-            <Route path="Users" element={<Dashboard />} />
-            <Route path="Reviews" element={<Dashboard />} />
+            <Route path="Bookings" element={<BookingDash />} />
+            <Route path="Users" element={<UsersDash />} />
+            <Route path="Reviews" element={<ReviewsDash />} />
             <Route path="Content" element={<Dashboard />} />
             <Route path="Finance" element={<Dashboard />} />
             <Route path="Setting" element={<Dashboard />} />

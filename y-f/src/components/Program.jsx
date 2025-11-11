@@ -1,4 +1,4 @@
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 const Program = (props) => {
   return (
     <div className="px-[25px] md:px-[50px]  lg:px-[150px] mb-[100px]">
@@ -16,7 +16,7 @@ const Program = (props) => {
                 {index + 1}
               </div>
               <ul className="pr-[20px]">
-                {step.map((item, index) => {
+                {[["Accommodation", "Scenic Tours"]].map((item, index) => {
                   return (
                     <li
                       key={index}

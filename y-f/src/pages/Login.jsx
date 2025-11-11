@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Input from "../components/Input.jsx";
@@ -12,11 +12,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state) => state.userAuthReducer);
+  const { loading, user } = useSelector((state) => state.userAuthReducer);
+  const a = useSelector((state) => state.userAuthReducer);
+  
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+  console.log(user, "anaaaaaaaaaa");
   const [loginFail, setLoginFail] = useState(false);
 
   const onChange = (e) => {
@@ -28,7 +31,7 @@ const Login = () => {
       loginUser({ email: values.email, password: values.password })
     ).then((result) => {
       setValues({ email: "", password: "" });
-      console.log(result);
+      console.log(result + "i ammmmmmmmmm");
       if (result.meta.requestStatus === "fulfilled") {
         navigate("/profile");
       } else {

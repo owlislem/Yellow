@@ -1,5 +1,6 @@
 import catchAsync from "../utils/catchAsync.js";
 import mongoose from "mongoose";
+import APIFeatures from "../utils/apiFeatures.js";
 
 export const findOne = (dataName, Model) => {
   return catchAsync(async (req, res, next) => {
@@ -29,7 +30,16 @@ export const createOne = (dataName, Model) => {
 
 export const findAll = (dataName, Model) => {
   return catchAsync(async (req, res, next) => {
-    const data = await Model.find();
+    let filter = {};
+    if (req.params.tourId) filter = { tour: req.params.tourId };
+
+    const features = new APIFeatures(Model.find(filter), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+    const data = await features.query;
     return res.status(200).json({
       status: "Succes",
       data: {

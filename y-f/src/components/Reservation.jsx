@@ -33,7 +33,9 @@ const Reservation = ({ destination }) => {
         />
       </div>
       <div className="flex items-center justify-between">
-        <div className="rounded-[20px] border-2 border-black w-fit p-[5px]">{`${destination.weekDay},${destination.day}th ${destination.month} ${destination.year} `}</div>
+        <div className="rounded-[20px] border-2 border-black w-fit p-[5px]">
+          6 Juin 2024
+        </div>
         <button className="main-button capitalize">book now</button>
       </div>
     </div>

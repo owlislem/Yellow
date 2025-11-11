@@ -25,7 +25,7 @@ const Highlight = ({ title, description, imageUrl, id }) => {
           className={`common-radius overflow-hidden w-[80%] h-[90%] absolute translate-y-[-50%] top-[52%] ${
             id % 2
               ? "right-[100%] translate-x-[20%]"
-              : "left-[100%] translate-x-[-20%]"
+              : "left-[100%] translate-x-[-30%]"
           }`}
         >
           <img
@@ -38,10 +38,5 @@ const Highlight = ({ title, description, imageUrl, id }) => {
     </div>
   );
 };
-Highlight.propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-};
+
 export default Highlight;

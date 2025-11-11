@@ -7,7 +7,6 @@ import TopTripInfos from "./TopTripInfos";
 import Footer from "./Footer";
 import TopTripExplore from "./TopTripExplore";
 import TopTripGallery from "./TopTripGallery";
-import TopTripReviews from "./TopTripReviews";
 const TopTrip = () => {
   const { id } = useParams();
   const [experience, setExperience] = useState(null);
@@ -40,9 +39,8 @@ const TopTrip = () => {
           distance={experience.distance}
         />
         <TopTripHighlights highlights={experience.highlights} />
-        <TopTripGallery gallery={experience.gallery} />
+        <TopTripGallery imageUrls={experience.gallery} />
         <TopTripExplore />
-        <TopTripReviews />
         <Footer />
       </div>
     );

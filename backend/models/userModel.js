@@ -90,6 +90,17 @@ const userSchema = new mongoose.Schema(
     },
     passwordResetToken: String,
     passwordResetExpires: Date,
+    Status: String,
+    NumberPhone: {
+      type: String,
+      validate: {
+        validator: function (v) {
+          return /^\d{10}$/.test(v);
+        },
+        message: (props) =>
+          `${props.value} is not a valid phone number! It should be 10 digits.`,
+      },
+    },
   },
 
   {
@@ -131,5 +142,5 @@ userSchema.methods.createResetPasswordToken = function () {
   return resetToken;
 };
 
-const User = mongoose.model("UserModel", userSchema);
+const User = mongoose.model("UserModell", userSchema);
 export default User;

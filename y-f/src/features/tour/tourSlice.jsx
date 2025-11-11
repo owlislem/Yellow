@@ -11,6 +11,33 @@ export const countUser = createAsyncThunk("userStateCount", async () => {
   console.log(response);
   return response.data.data;
 });
+export const countBooking = createAsyncThunk("userStateCount", async () => {
+  const response = await axios.get("/api/v1/tour/countBooking");
+  console.log(response);
+  return response.data.data;
+});
+export const countSumPrice = createAsyncThunk("userStateCount", async () => {
+  const response = await axios.get("/api/v1/tour/sunPriceTours");
+  console.log(response);
+  return response.data.data;
+});
+
+export const getTours = createAsyncThunk("getTours", async () => {
+  const response = await axios.get("/api/v1/tour");
+  console.log(response);
+  return response.data.data;
+});
+export const getTour = createAsyncThunk("getTour", async (info) => {
+  const response = await axios.get(`/api/v1/tour/${info}`);
+  console.log(response);
+  console.log(response.data.data);
+  return response.data.data;
+});
+export const addTour = createAsyncThunk("addTour", async (tripDetails) => {
+  const request = await axios.post("api/v1/tour", tripDetails);
+  const response = request.data.data;
+  return response;
+});
 
 export const tourSlice = createSlice({
   name: "tour",

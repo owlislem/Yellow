@@ -23,10 +23,8 @@ router.post("/login", login);
 router.post("/signup", signup);
 router.get("/logout", logout);
 
-router.post('/forgetPassword', forgetPassword);
-router.patch('/resetPassword/:token', resetPassword);
+router.post("/forgetPassword", forgetPassword);
+router.patch("/resetPassword/:token", resetPassword);
 
-router.use(protect);
-
-router.route("/:id").get(findUser).delete(deleteUser);
-router.route("/").get(findUsers).post(createUser).patch(doMe, updateUser);
+router.route("/:id").get(findUser).delete(deleteUser).patch(updateUser);
+router.route("/").get(findUsers).post(createUser);

@@ -29,6 +29,24 @@ export const updateUser = createAsyncThunk("updateUser", async (infos) => {
   const response = await request.data.data;
   return response;
 });
+export const deleteUser = createAsyncThunk("deleteUser", async (id) => {
+  const request = await axios.delete(`/api/v1/user/${id}`);
+  const respone = await request.data;
+  return respone;
+});
+
+export const getUsers = createAsyncThunk("getUsers", async (info) => {
+  console.log(info);
+  const response = await axios.get(`/api/v1/user?limit=${info}&role=User`);
+  console.log(info);
+  return response.data.data;
+});
+export const getUser = createAsyncThunk("getUser", async (info) => {
+  console.log(info);
+  const response = await axios.get(`/api/v1/user/${info}`);
+  console.log(info);
+  return response.data.data;
+});
 
 export const userAuthSlice = createSlice({
   name: "user",

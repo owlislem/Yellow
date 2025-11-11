@@ -5,6 +5,19 @@ import { logoutUser } from "../features/user/userAuthSlice";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import LogoutIcon from "@mui/icons-material/Logout";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import FullButton from "./FullButton";
+
+// Function to handle smooth scrolling
+const scrollToSection = (sectionId) => {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth" });
+  }
+};
 
 const Header = () => {
   // State variables
@@ -57,22 +70,47 @@ const Header = () => {
     };
   }, [isSideMenuOpen]);
 
-  const location = useLocation();
+  /////////////////////////////////////////////////////////////////
+  const location = useLocation(); // Use location to get the current URL
+
+  useEffect(() => {
+    if (location.hash) {
+      const sectionId = location.hash.replace("#", "");
+      scrollToSection(sectionId);
+    }
+  }, [location]);
+  ///////////////////////////////////////////////////////////////////
+  const [isOpen, setIsOpen] = useState(false);
+  const HandleDropMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  //user levels
+  const getTravelLevel = (points) => {
+    if (points >= 80) {
+      return "Master Traveler";
+    } else if (points >= 60) {
+      return "Expert Traveler";
+    } else if (points >= 40) {
+      return "Seasoned Traveler";
+    } else if (points >= 20) {
+      return "Frequent Traveler";
+    } else {
+      return "New Traveler";
+    }
+  };
   return (
     <div
-      className={`header ${
-        isScrolled ? "shadow-header-shadow bg-white" : "bg-transparent"
-      } ${
-        location.pathname === "/" ||
-        location.pathname.startsWith("/experiences")
-          ? ""
-          : "shadow-header-shadow bg-white"
+      className={`flex z-50 justify-between absolute w-full px-[15px] md:px-[30px] py-[20px] lg:px-[70px] items-center bg-transparent  ${
+        isScrolled
+          ? "sticky top-0 shadow-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg"
+          : ""
       }`}
     >
       {/* Logo */}
       <Link to={"/"}>
         <img
-          src="/assets/logo.svg"
+          src="/images/yellowFamily-logo-removebg-preview.png"
           alt="Yellow-Family-logo"
           className="w-[130px] lg:w-[160px]"
         />
@@ -80,16 +118,16 @@ const Header = () => {
 
       {/* Desktop Menu */}
       <div className="hidden lg:text-[18px] text-[16px] gap-[20px] md:flex lg:gap-[40px] header-menu">
-        <Link to={"/"} className="menu-link">
+        <Link to={"/#Hero"} className="menu-link hover:text-customYellow">
           Home
         </Link>
-        <Link to={"/#aboutUS"} className="menu-link">
+        <Link to={"/#About"} className="menu-link hover:text-customYellow">
           About us
         </Link>
-        <Link to={"/#destinations"} className="menu-link">
+        <Link to={"/#Next"} className="menu-link hover:text-customYellow">
           Destinations
         </Link>
-        <Link to={"/#contact"} className="menu-link">
+        <Link to={"/contactUs"} className="menu-link hover:text-customYellow">
           Contact
         </Link>
       </div>
@@ -109,34 +147,82 @@ const Header = () => {
         {!currentUser?.user ? (
           <>
             <Link to={"/login"}>
-              <button className=" border-[2px]  lg:px-[25px] px-[18px] py-[5px] border-yellow-primary rounded-[30px] hover:shadow-lg transform hover:scale-95 transition-all">
+              <button className="h-[45px] border-[2px]  lg:px-[25px] px-[18px] py-[5px] border-yellow-primary rounded-[30px] hover:shadow-lg transform hover:scale-95 transition-all">
                 Login
               </button>
             </Link>
-            <Link to={"/signup"}>
-              <button className=" py-[7px] lg:px-[25px] px-[18px] bg-yellow-primary rounded-[30px] hover:shadow-md transform hover:scale-95 transition-all">
-                SignUp
-              </button>
+            <Link to={"/SignUp"}>
+              <FullButton text="SignUp" />
             </Link>
           </>
         ) : (
           <div className="flex gap-[25px]">
-            <Link to={"/"}>
-              <button
-                className="border-[2px] py-[5px] px-[25px] border-black rounded-lg"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </Link>
-            <Link to={"/profile"} className="flex gap-[15px]">
-              <h1 className="text-2xl">{currentUser?.user.username}</h1>
-              <img
-                className="w-[45px] h-[45px] rounded-full bg-slate-700 object-cover"
-                src={currentUser?.user.profileImage}
-                alt="Profile"
-              />
-            </Link>
+            <button
+              onClick={HandleDropMenu}
+              className={`border-2 font-lg  rounded-[50px] px-3 py-1 border-customYellow  ${
+                isOpen
+                  ? " bg-customYellow text-black"
+                  : " bg-transparent text-customYellow"
+              }`}
+            >
+              <AccountCircleOutlinedIcon
+                sx={{ fontSize: 30 }}
+              ></AccountCircleOutlinedIcon>
+              {isOpen ? (
+                <KeyboardArrowUpIcon
+                  sx={{ fontSize: 30, marginLeft: "10px" }}
+                />
+              ) : (
+                <KeyboardArrowDownOutlinedIcon
+                  sx={{ fontSize: 30, marginLeft: "10px" }}
+                />
+              )}
+            </button>
+
+            {isOpen && (
+              <div className="bg-white py-6 px-6 absolute right-[75px]  mt-14 shadow-my-shadow  rounded-tl-[20px] rounded-bl-[20px] rounded-br-[20px]">
+                <div className="flex items-center my-[10px]">
+                  <img
+                    className="w-[45px] h-[45px] rounded-full bg-slate-700 object-cover"
+                    src={currentUser?.user.profileImage}
+                    alt="Profile"
+                  />
+                  <div className="ml-[5px]">
+                    <h1 className="text-[16px] font-medium">
+                      {currentUser?.user.username}
+                    </h1>
+                    <h3 className="text-grey-500 text-[13px]">
+                      {getTravelLevel(currentUser.points)}
+                    </h3>
+                  </div>
+                </div>
+                <hr />
+                <div className="flex flex-col text-[15px] font-medium text-gray-700 my-[10px]">
+                  <Link
+                    to={`/profile/${currentUser?.user._id}`}
+                    className="hover:text-customYellow"
+                  >
+                    View Profile
+                  </Link>
+                  <Link
+                    to="/profile?component=notifications"
+                    className="hover:text-customYellow"
+                  >
+                    Notifications
+                  </Link>
+                </div>
+                <hr />
+                <Link to={"/Login"}>
+                  <button
+                    className="menu-link text-[16px] text-black font-medium my-[10px] hover:text-customYellow"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                    <LogoutIcon sx={{ fontSize: 20, marginLeft: 1 }} />
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -151,24 +237,24 @@ const Header = () => {
             {isSideMenuOpen ? <CloseIcon /> : null}
           </button>
           <div className=" flex flex-col gap-[20px]   ">
-            <Link to={"#"} className="menu-link ">
+            <Link to={"/#Hero"} className="menu-link ">
               Home
             </Link>
-            <Link to={"#"} className="menu-link">
+            <Link to={"/#About"} className="menu-link">
               About us
             </Link>
-            <Link to={"#"} className="menu-link  ">
+            <Link to={"/#Next"} className="menu-link  ">
               Destinations
             </Link>
-            <Link to={"#"} className="menu-link">
+            <Link to={"/#"} className="menu-link">
               Contact
             </Link>
           </div>
-          <div className="flex flex-col gap-[20px] mt-[20px]">
+          <div className="flex flex-col gap-[20px] mt-[20px] ">
             <hr />
             {!currentUser?.user ? (
               <>
-                <Link to={"/login"}>
+                <Link to={`/login`}>
                   <button className="menu-link w-full text-left">Login</button>
                 </Link>
                 <Link to={"/signup"}>
@@ -176,19 +262,21 @@ const Header = () => {
                 </Link>
               </>
             ) : (
-              <div className="flex gap-[25px]">
-                <Link to={"/Login"}>
-                  <button className="menu-link" onClick={handleLogout}>
-                    Logout
-                  </button>
+              <div className="flex flex-col gap-[10px]">
+                <Link
+                  to={`/profile/${currentUser?.user.name}`}
+                  className="hover:text-customYellow"
+                >
+                  View Profile
                 </Link>
-                <Link to={"/profile"} className="flex gap-[15px]">
-                  <h1 className="text-2xl">{currentUser?.user.username}</h1>
-                  <img
-                    className="w-[45px] h-[45px] rounded-full bg-slate-700 object-cover"
-                    src={currentUser?.user.profileImage}
-                    alt="Profile"
-                  />
+                <Link to={"/Login"}>
+                  <button
+                    className="menu-link  text-[16px] text-black font-medium my-[10px] hover:text-customYellow"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                    <LogoutIcon sx={{ fontSize: 20, marginLeft: 1 }} />
+                  </button>
                 </Link>
               </div>
             )}

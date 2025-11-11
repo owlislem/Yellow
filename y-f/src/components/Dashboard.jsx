@@ -2,24 +2,46 @@ import { IoSearch } from "react-icons/io5";
 import iconsUser from "../assets/icon-user.svg";
 import iconsTrip from "../assets/icon-trip.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { countTour, countUser } from "../features/tour/tourSlice";
+import {
+  countBooking,
+  countSumPrice,
+  countTour,
+  countUser,
+} from "../features/tour/tourSlice";
 
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ArrayOfData from "./ArrayOfData";
+import AddTripForm from "./addTripForm";
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const [state, setState] = useState({ tourState: 0, userState: 0 });
+  const [state, setState] = useState({
+    tourState: 0,
+    userState: 0,
+    bookingState: 0,
+    sumPrice: 0,
+  });
+  const [display, setDisplay] = useState(false);
 
   useEffect(() => {
+    (async () => {
+      const { payload } = await dispatch(countUser());
+      setState((state) => ({ ...state, userState: payload?.userCount }));
+    })();
     (async () => {
       const { payload } = await dispatch(countTour());
       console.log(payload);
       setState((state) => ({ ...state, tourState: payload?.tourCount }));
     })();
-
     (async () => {
-      const { payload } = dispatch(countUser());
-      setState((state) => ({ ...state, userState: payload?.userCount }));
+      const { payload } = await dispatch(countBooking());
+      console.log(payload);
+      setState((state) => ({ ...state, bookingState: payload?.bookingCount }));
+    })();
+    (async () => {
+      const { payload } = await dispatch(countSumPrice());
+      console.log(payload);
+      setState((state) => ({ ...state, sumPrice: payload?.totalSum }));
     })();
   }, [dispatch]);
   console.log(state);
@@ -39,26 +61,26 @@ const Dashboard = () => {
     {
       id: 2,
       cardTitle: "Total Users",
-      cardInfo: state.tourState,
+      cardInfo: state.userState,
       image: iconsTrip,
     },
     {
       id: 3,
       cardTitle: "Bookings",
-      cardInfo: state.userState,
+      cardInfo: state.bookingState,
       image: iconsTrip,
     },
     {
       id: 4,
       cardTitle: "Revenue DA",
-      cardInfo: state.userState,
+      cardInfo: state.sumPrice,
       image: iconsTrip,
     },
   ];
-
+  console.log(cardList + "anaaa fdfsdfsd");
   console.log(currentUser);
   return (
-    <div className="w-full h-full bg-[#d4d9de]">
+    <div className="w-full h-full bg-gray-v2">
       <div className="h-[80px] flex justify-between items-center fixed z-10 bg-inherit w-[80%] px-[60px]">
         <h1 className="text-[40px] font-[500]">
           {location.pathname.split("/")[2]}
@@ -102,6 +124,19 @@ const Dashboard = () => {
             </div>
           );
         })}
+      </div>
+      <div className="my-[40px] p-[20px]">
+        <div className="flex justify-between px-[20px] items-center py-[10px]">
+          <p className="text-[#535252] font-[20px]">Add new trip</p>
+          <button
+            className="py-[12px] px-[25px] bg-[#FFD703] rounded-full font-bold text-center"
+            onClick={() => setDisplay((prev) => !prev)}
+          >
+            {!display ? "Add +" : "Hide"}
+          </button>
+        </div>
+        {display && <AddTripForm />}
+        <ArrayOfData />
       </div>
     </div>
   );
