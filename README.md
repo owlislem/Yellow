@@ -425,11 +425,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Your Name**
+**Islem Boucheheit**
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+- GitHub: [@owlislem](https://github.com/owlislem)
+- Email: mi_bouchehit@esi.dz
+- Portfolio: [github.com/owlislem](https://github.com/owlislem)
 
 ---
 
