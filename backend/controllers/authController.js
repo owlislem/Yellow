@@ -9,24 +9,21 @@ import crypto from "crypto";
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECR, { expiresIn: "1d" });
 };
+
 const factoryAuthResponse = (user, statusCode, res) => {
   const token = generateToken(user._id);
-  console.log(token);
   user.password = undefined;
+  
   const cookieOptions = {
-    expires: new Date(Date.now() + 9000000000000),
-    secure: false,
+    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 1),
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
   };
-  res.cookie(
-    "jwt",
-    token,
-    process.env.NODE_ENV === "production"
-      ? (cookieOptions.secure = true)
-      : cookieOptions
-  );
+  
+  res.cookie("jwt", token, cookieOptions);
+  
   return res.status(statusCode).json({
-    status: "Succes",
+    status: "success",
     token,
     data: {
       user,
@@ -46,21 +43,28 @@ export const signup = catchAsync(async (req, res, next) => {
 
 export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password)
+  
+  if (!email || !password) {
     return next(
       new AppError(
         "Please provide both your email and password for login.",
         400
       )
     );
+  }
+  
   const currentUser = await User.findOne({ email }).select("+password");
-  console.log(currentUser);
-  if (!currentUser)
+  
+  if (!currentUser) {
     return next(
       new AppError("Email not found. Please check your email or sign up.", 401)
     );
-  if (!(await currentUser.isPasswordCorrect(password, currentUser.password)))
+  }
+  
+  if (!(await currentUser.isPasswordCorrect(password, currentUser.password))) {
     return next(new AppError("Authentication failed. Please try again.", 401));
+  }
+  
   factoryAuthResponse(currentUser, 200, res);
 });
 
@@ -73,6 +77,7 @@ export const logout = (req, res) => {
 
 export const protect = catchAsync(async (req, res, next) => {
   let token;
+  
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -81,12 +86,15 @@ export const protect = catchAsync(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
-  if (!token)
+  
+  if (!token) {
     return next(
       new AppError("Unauthorized access. Please sign in to continue.", 401)
     );
+  }
+  
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECR);
-  console.log(decoded);
+  
   const freshUser = await User.findById(decoded.userId);
   if (!freshUser) {
     return next(
@@ -96,6 +104,7 @@ export const protect = catchAsync(async (req, res, next) => {
       )
     );
   }
+  
   if (freshUser.passwordChangedAfter(decoded.iat)) {
     return next(
       new AppError(
@@ -104,8 +113,8 @@ export const protect = catchAsync(async (req, res, next) => {
       )
     );
   }
+  
   req.user = freshUser;
-  console.log(req.user.id);
   next();
 });
 
@@ -126,30 +135,31 @@ export const restrictTo = (...roles) => {
 export const forgetPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
-  if (!user) return next(new AppError("There is no user with this email", 404));
+  
+  if (!user) {
+    return next(new AppError("There is no user with this email", 404));
+  }
+  
   const resetToken = user.createResetPasswordToken();
   await user.save({ validateBeforeSave: false });
-  // 3 send it to user email
+  
   const resetURL = `${req.protocol}://${req.get(
     "host"
   )}/api/v1/users/resetPassword/${resetToken}`;
+  
   try {
-    // await sendEmail({
-    //   email: user.email,
-    //   subject: "Your password resset token ( valid for 10 min )",
-    //   message,
-    // });
     await new Email(user, resetURL).sendResetPassword();
     res.status(200).json({
-      status: "sucess",
+      status: "success",
       message: "Token sent to email!",
     });
   } catch (err) {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
+    await user.save({ validateBeforeSave: false });
     return next(
       new AppError(
-        "there was an error sending the email. Try again later !",
+        "There was an error sending the email. Try again later!",
         500
       )
     );
@@ -161,15 +171,21 @@ export const resetPassword = catchAsync(async (req, res, next) => {
     .createHash("sha256")
     .update(req.params.token)
     .digest("hex");
+    
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
-  if (!user) return next(new AppError("token is invalid or expired", 400));
+  
+  if (!user) {
+    return next(new AppError("Token is invalid or expired", 400));
+  }
+  
   user.password = req.body.password;
   user.confirmPassword = req.body.confirmPassword;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   await user.save();
+  
   factoryAuthResponse(user, 200, res);
 });

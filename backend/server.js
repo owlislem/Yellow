@@ -1,13 +1,25 @@
 import app from "./app.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
 dotenv.config({ path: "./config.env" });
 
-mongoose.connect(process.env.MONGO_URL, {}).then((con) => {
-    console.log(con.connections);
+const PORT = process.env.PORT || 3000;
+
+// Database connection
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("✅ Database connected successfully");
+  })
+  .catch((error) => {
+    console.error("❌ Database connection failed:", error.message);
+    process.exit(1);
   });
-  app.listen("3000", () => {
-    console.log("Server Listening in Port 3000 ... ");
-  });
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+});
 
   

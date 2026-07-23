@@ -1,7 +1,8 @@
 {
-  "name": "y-f",
+  "name": "yellow-family-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Frontend application for Yellow Family tourism platform",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,6 +10,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/style": "^0.8.0",

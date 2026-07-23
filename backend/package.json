@@ -1,15 +1,23 @@
 {
-  "name": "backend",
+  "name": "yellow-family-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend API for Yellow Family tourism platform",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "start:prod": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "express",
+    "mongodb",
+    "tourism",
+    "api",
+    "rest",
+    "nodejs"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",

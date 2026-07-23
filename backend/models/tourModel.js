@@ -43,10 +43,5 @@ const tourModel = new mongoose.Schema(
   }
 );
 
-// tourModel.virtual("reviews", {
-//   ref: "Review",
-//   foreignField: "tour",
-//   localField: "_id",
-// });
 const Tour = mongoose.model("tourModell", tourModel);
 export default Tour;
