@@ -191,7 +191,7 @@ Recommended screenshots:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/yellow-family.git
+git clone https://github.com/owlislem/yellow-family.git
 cd yellow-family
 ```
 
